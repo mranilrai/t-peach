@@ -1,0 +1,37 @@
+<!-- Alternative: Formspree Implementation -->
+<!-- Replace the contact form in index.html with this if using Formspree -->
+
+<form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <div class="form-group">
+        <input type="text" name="name" placeholder="Your Name" required>
+    </div>
+    <div class="form-group">
+        <input type="email" name="email" placeholder="Your Email" required>
+    </div>
+    <div class="form-group">
+        <input type="tel" name="phone" placeholder="Your Phone">
+    </div>
+    <div class="form-group">
+        <select name="service" required>
+            <option value="">Select Service</option>
+            <option value="Hair Styling">Hair Styling</option>
+            <option value="Facial Treatment">Facial Treatment</option>
+            <option value="Nail Care">Nail Care</option>
+            <option value="Makeup">Makeup</option>
+            <option value="Eyebrow & Lashes">Eyebrow & Lashes</option>
+            <option value="Body Treatment">Body Treatment</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <textarea name="message" placeholder="Message" rows="5"></textarea>
+    </div>
+    <button type="submit" class="submit-btn">Send Message</button>
+</form>
+
+<!-- Steps to use Formspree:
+1. Go to formspree.io
+2. Sign up for free account
+3. Create a new form
+4. Replace YOUR_FORM_ID with your actual form ID
+5. Formspree handles the rest!
+-->
