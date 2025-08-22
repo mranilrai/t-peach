@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://tpeachartistry.com/sitemap.xml
+
+# Specific crawl directives for beauty salon
+Allow: /services
+Allow: /gallery
+Allow: /about
+Allow: /contact
+
+# Block any admin or private areas (if they exist in future)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+
+# Allow search engines to crawl images
+Allow: /images/
+Allow: /public/
+
+# Crawl delay (optional - 1 second)
+Crawl-delay: 1

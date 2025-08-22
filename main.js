@@ -103,7 +103,7 @@ function clearFieldValidation(field) {
     removeFieldMessage(field);
 }
 
-// Setup phone number formatting
+// Setup phone number formatting for Indian numbers
 function setupPhoneNumberFormatting() {
     const phoneField = document.querySelector('input[name="phone"]');
     if (!phoneField) return;
@@ -112,18 +112,27 @@ function setupPhoneNumberFormatting() {
         // Remove all non-digits
         let value = e.target.value.replace(/\D/g, '');
         
-        // Limit to 10 digits
-        if (value.length > 10) {
-            value = value.slice(0, 10);
-        }
-        
-        // Format as (XXX) XXX-XXXX
-        if (value.length >= 6) {
-            value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6)}`;
-        } else if (value.length >= 3) {
-            value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-        } else if (value.length > 0) {
-            value = `(${value}`;
+        // Handle different input scenarios
+        if (value.startsWith('91') && value.length > 2) {
+            // If starts with 91 (country code), limit to 12 digits total
+            if (value.length > 12) {
+                value = value.slice(0, 12);
+            }
+            // Format as +91 XXXXX XXXXX
+            if (value.length >= 7) {
+                value = `+91 ${value.slice(2, 7)} ${value.slice(7)}`;
+            } else if (value.length > 2) {
+                value = `+91 ${value.slice(2)}`;
+            }
+        } else {
+            // Regular 10-digit Indian mobile number
+            if (value.length > 10) {
+                value = value.slice(0, 10);
+            }
+            // Format as XXXXX XXXXX
+            if (value.length >= 6) {
+                value = `${value.slice(0, 5)} ${value.slice(5)}`;
+            }
         }
         
         e.target.value = value;
@@ -136,7 +145,7 @@ function setupPhoneNumberFormatting() {
             const value = e.target.value;
             
             // If cursor is after a formatting character, move it back
-            if (cursorPosition > 0 && /[\(\)\s\-]/.test(value[cursorPosition - 1])) {
+            if (cursorPosition > 0 && /[\s\+]/.test(value[cursorPosition - 1])) {
                 setTimeout(() => {
                     e.target.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
                 }, 0);
@@ -195,13 +204,27 @@ function validateForm(formData) {
         errors.push('Please enter a valid email address');
     }
     
-    // Phone validation (required and must be exactly 10 digits)
+    // Phone validation (required and must be valid Indian mobile number)
     if (!phone) {
         errors.push('Phone number is required');
-    } else if (!validator.isLength(phone.replace(/\D/g, ''), { min: 10, max: 10 })) {
-        errors.push('Phone number must be exactly 10 digits');
-    } else if (!validator.isMobilePhone(phone, 'any')) {
-        errors.push('Please enter a valid phone number');
+    } else {
+        // Remove all non-digits for validation
+        const digitsOnly = phone.replace(/\D/g, '');
+        
+        // Check for Indian mobile number patterns
+        if (digitsOnly.length === 10) {
+            // 10 digit format (without country code)
+            if (!digitsOnly.match(/^[6-9]\d{9}$/)) {
+                errors.push('Please enter a valid Indian mobile number (must start with 6, 7, 8, or 9)');
+            }
+        } else if (digitsOnly.length === 12) {
+            // 12 digit format (with +91)
+            if (!digitsOnly.match(/^91[6-9]\d{9}$/)) {
+                errors.push('Please enter a valid Indian mobile number (+91 followed by 10 digits starting with 6, 7, 8, or 9)');
+            }
+        } else {
+            errors.push('Please enter a valid Indian mobile number (10 digits or +91 followed by 10 digits)');
+        }
     }
     
     // Date and time validation
