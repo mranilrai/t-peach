@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/validator": "^13.15.2",
     "vite": "^5.0.8"
+  },
+  "dependencies": {
+    "validator": "^13.15.15"
   }
 }
