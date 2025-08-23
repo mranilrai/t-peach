@@ -41,12 +41,20 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    min-height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
 }
 
 .logo-img {
     height: 60px;
     width: auto;
+    max-width: 200px;
     transition: transform 0.3s ease;
+    object-fit: contain;
 }
 
 .logo-img:hover {
@@ -606,6 +614,15 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .logo-img {
+        height: 50px;
+        max-width: 150px;
+    }
+    
+    .nav-container {
+        padding: 0 15px;
+    }
+    
     .hamburger {
         display: flex;
     }

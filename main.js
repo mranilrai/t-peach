@@ -1,5 +1,5 @@
-import './style.css';
-import validator from 'validator';
+// Simple HTML/CSS/JS website - no imports needed
+// Validator will be loaded via CDN
 
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
@@ -191,7 +191,7 @@ function validateForm(formData) {
     // Required field validation
     if (!name || name.length < 2) {
         errors.push('Name is required and must be at least 2 characters long');
-    } else if (!validator.isLength(name, { min: 2, max: 50 })) {
+            } else if (!window.validator.isLength(name, { min: 2, max: 50 })) {
         errors.push('Name must be between 2 and 50 characters');
     }
     
@@ -200,7 +200,7 @@ function validateForm(formData) {
     }
     
     // Email validation (optional but if provided, must be valid)
-    if (email && !validator.isEmail(email)) {
+    if (email && !window.validator.isEmail(email)) {
         errors.push('Please enter a valid email address');
     }
     
@@ -253,7 +253,7 @@ function validateForm(formData) {
     }
     
     // Message validation (optional but if provided, check length)
-    if (message && !validator.isLength(message, { max: 500 })) {
+    if (message && !window.validator.isLength(message, { max: 500 })) {
         errors.push('Message must be less than 500 characters');
     }
     
